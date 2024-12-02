@@ -17,4 +17,4 @@ spring:
     application:
         name: Memo
 mybatis:
-    mapper-locations: mappers/*Mapper.xml 
+    mapper-locations: mappers/*Mapper.xml
