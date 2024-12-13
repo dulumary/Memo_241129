@@ -15,6 +15,10 @@ public class FileManager {
 	
 	public static String saveFile(int userId, MultipartFile file) {
 		
+		if(file == null) {
+			return null;
+		}
+		
 		// 파일 이름 유지 
 		// 같은 이름의 파일이 전달 될 경우를 대비해서 디렉토리를 만들어서 파일 저장
 		// 디렉토리 이름에 사용자 정보 포함
@@ -55,6 +59,35 @@ public class FileManager {
 		// /images/2_238545309/test.png
 		return "/images" + directoryName + "/" + file.getOriginalFilename();
 	}
+	
+	public static boolean removeFile(String filePath) {   // /images/2_238545309/test.png
+		
+		if(filePath == null) {
+			return false;
+		}
+		
+		// E:\\dulumaryT\\web\\20240729\\springProject\\upload\\memo/2_238545309/test.png
+		
+		String fullFilePath = FILE_UPLOAD_PATH + filePath.replace("/images", "");
+		
+		Path path = Paths.get(fullFilePath);
+		// E:\\dulumaryT\\web\\20240729\\springProject\\upload\\memo/2_238545309
+		Path directoryPaht = path.getParent();
+		
+		try {
+			Files.delete(path);
+			Files.delete(directoryPaht);
+			
+			return true;
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			
+			return false;
+		}
+		
+	}
+	
 
 }
 

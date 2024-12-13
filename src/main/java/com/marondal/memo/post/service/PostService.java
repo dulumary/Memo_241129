@@ -50,6 +50,53 @@ public class PostService {
 		return optionalPost.orElse(null);
 	}
 	
+	public boolean updatePost(int id, String title, String contents) {
+		
+		Optional<Post> optionalPost = postRepository.findById(id);
+		
+		if(optionalPost.isPresent()) {
+			
+			Post post = optionalPost.get();
+			
+			post = post.toBuilder().title(title).contents(contents).build();
+			
+			try {
+				postRepository.save(post);
+				return true;
+			} catch(Exception e) {
+				return false;
+			}
+			
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
+	public boolean deletePost(int id) {
+		
+		Optional<Post> optionalPost = postRepository.findById(id);
+		
+		if(optionalPost.isPresent()) {
+			
+			Post post = optionalPost.get();
+			
+			FileManager.removeFile(post.getImagePath());
+			
+			postRepository.delete(post);
+			
+			return true;
+			
+		} else {
+			return false;
+		}
+		
+		
+	}
+	
+	
+	
 	
 	
 	
